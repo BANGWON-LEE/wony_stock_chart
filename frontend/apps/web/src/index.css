@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  --color-chart-canvas: var(--chart-color-background-canvas);
+  --color-chart-text-primary: var(--chart-color-text-primary);
+  --color-chart-text-secondary: var(--chart-color-text-secondary);
+  --color-chart-text-brand: var(--chart-color-text-brand);
+  --color-chart-card-elevated: var(--chart-card-elevated-background);
+  --color-chart-card-elevated-foreground: var(--chart-card-elevated-foreground);
+  --color-chart-card-elevated-border: var(--chart-card-elevated-border);
+  --color-chart-button-secondary: var(--chart-button-secondary-background-default);
+  --color-chart-button-secondary-foreground: var(--chart-button-secondary-foreground-default);
+  --color-chart-button-secondary-border: var(--chart-button-secondary-border-default);
+  --color-chart-border-default: var(--chart-color-border-default);
+
+  --spacing-chart-1: var(--chart-spacing-1);
+  --spacing-chart-2: var(--chart-spacing-2);
+  --spacing-chart-3: var(--chart-spacing-3);
+  --spacing-chart-4: var(--chart-spacing-4);
+  --spacing-chart-6: var(--chart-spacing-6);
+  --spacing-chart-8: var(--chart-spacing-8);
+  --spacing-chart-12: var(--chart-spacing-12);
+  --spacing-chart-card: var(--chart-card-padding);
+
+  --radius-chart-card: var(--chart-card-radius);
+  --radius-chart-full: var(--chart-radius-full);
+  --shadow-chart-elevated: var(--chart-card-elevated-shadow);
+  --text-chart-sm: var(--chart-font-size-sm);
+  --font-chart-heading: var(--chart-typography-heading-font-family);
+}
+
+@layer base {
+  :root {
+    font-family: var(--chart-typography-body-font-family);
+    font-size: var(--chart-typography-body-font-size);
+    line-height: var(--chart-typography-body-line-height);
+    letter-spacing: var(--chart-typography-body-letter-spacing);
+    color-scheme: light dark;
+    color: var(--chart-color-text-secondary);
+    background: var(--chart-color-background-canvas);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    @media (max-width: 1024px) {
+      font-size: 16px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+
+    #social .button-icon {
+      filter: invert(1) brightness(2);
+    }
+  }
+
+  #root {
+    width: 1126px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border-inline: var(--chart-border-width-1) solid var(--chart-color-border-default);
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--chart-typography-heading-font-family);
+    font-weight: var(--chart-typography-heading-font-weight);
+    color: var(--chart-color-text-primary);
+  }
+
+  h1 {
+    font-size: 56px;
+    letter-spacing: -1.68px;
+    margin: 32px 0;
+
+    @media (max-width: 1024px) {
+      font-size: 36px;
+      margin: 20px 0;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 118%;
+    letter-spacing: -0.24px;
+    margin: 0 0 8px;
+
+    @media (max-width: 1024px) {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+
+  code,
+  .counter {
+    font-family: var(--chart-typography-code-font-family);
+    display: inline-flex;
+    border-radius: var(--chart-radius-sm);
+    color: var(--chart-color-text-primary);
+  }
+
+  code {
+    font-size: var(--chart-typography-code-font-size);
+    line-height: 135%;
+    padding: 4px 8px;
+    background: var(--chart-color-surface-subtle);
+  }
+}
+
+@layer components {
+  .chart-renderer {
+    height: 380px;
+    min-height: 280px;
+    position: relative;
+    width: 100%;
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@chart/tokens",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": [
+    "./dist/css/*.css"
+  ],
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/js/index.js"
+    },
+    "./primitive": {
+      "types": "./dist/types/primitive.d.ts",
+      "default": "./dist/js/primitive.js"
+    },
+    "./semantic": {
+      "types": "./dist/types/semantic.d.ts",
+      "default": "./dist/js/semantic.js"
+    },
+    "./component": {
+      "types": "./dist/types/component.d.ts",
+      "default": "./dist/js/component.js"
+    },
+    "./css": "./dist/css/tokens.css",
+    "./css/light": "./dist/css/light.css",
+    "./css/dark": "./dist/css/dark.css",
+    "./css/themes": "./dist/css/themes.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ]
+}

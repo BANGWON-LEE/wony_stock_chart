@@ -1,0 +1,33 @@
+{
+  "typography": {
+    "body": {
+      "fontFamily": { "$type": "fontFamily", "$value": "{fontFamily.sans}" },
+      "fontSize": { "$type": "dimension", "$value": "{fontSize.lg}" },
+      "fontWeight": { "$type": "fontWeight", "$value": "{fontWeight.regular}" },
+      "lineHeight": { "$type": "number", "$value": "{lineHeight.normal}" },
+      "letterSpacing": { "$type": "dimension", "$value": "{letterSpacing.wide}" }
+    },
+    "heading": {
+      "fontFamily": { "$type": "fontFamily", "$value": "{fontFamily.heading}" },
+      "fontWeight": { "$type": "fontWeight", "$value": "{fontWeight.medium}" },
+      "lineHeight": { "$type": "number", "$value": "{lineHeight.tight}" },
+      "letterSpacing": { "$type": "dimension", "$value": "{letterSpacing.tight}" }
+    },
+    "code": {
+      "fontFamily": { "$type": "fontFamily", "$value": "{fontFamily.mono}" },
+      "fontSize": { "$type": "dimension", "$value": "{fontSize.sm}" }
+    }
+  },
+  "layout": {
+    "pageMaxWidth": { "$type": "dimension", "$value": "1126px" }
+  },
+  "focus": {
+    "ringColor": { "$type": "color", "$value": "{color.violet.400}" },
+    "ringWidth": { "$type": "dimension", "$value": "{borderWidth.2}" },
+    "ringOffset": { "$type": "dimension", "$value": "{spacing.1}" }
+  },
+  "shadow": {
+    "surface": { "$type": "shadow", "$value": "{shadow.darkMd}" },
+    "elevated": { "$type": "shadow", "$value": "{shadow.darkLg}" }
+  }
+}

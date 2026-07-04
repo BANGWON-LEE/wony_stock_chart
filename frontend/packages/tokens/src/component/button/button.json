@@ -1,0 +1,92 @@
+{
+  "button": {
+    "fontFamily": { "$type": "fontFamily", "$value": "{typography.body.fontFamily}" },
+    "fontWeight": { "$type": "fontWeight", "$value": "{fontWeight.medium}" },
+    "transitionDuration": { "$type": "duration", "$value": "{duration.fast}" },
+    "transitionTiming": { "$type": "cubicBezier", "$value": "{easing.standard}" },
+    "borderWidth": { "$type": "dimension", "$value": "{borderWidth.1}" },
+    "focusRingColor": { "$type": "color", "$value": "{focus.ringColor}" },
+    "focusRingWidth": { "$type": "dimension", "$value": "{focus.ringWidth}" },
+    "sm": {
+      "height": { "$type": "dimension", "$value": "32px" },
+      "paddingInline": { "$type": "dimension", "$value": "{spacing.3}" },
+      "gap": { "$type": "dimension", "$value": "{spacing.2}" },
+      "fontSize": { "$type": "dimension", "$value": "{fontSize.sm}" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" }
+    },
+    "md": {
+      "height": { "$type": "dimension", "$value": "40px" },
+      "paddingInline": { "$type": "dimension", "$value": "{spacing.4}" },
+      "gap": { "$type": "dimension", "$value": "{spacing.2}" },
+      "fontSize": { "$type": "dimension", "$value": "{fontSize.md}" },
+      "radius": { "$type": "dimension", "$value": "{radius.md}" }
+    },
+    "lg": {
+      "height": { "$type": "dimension", "$value": "48px" },
+      "paddingInline": { "$type": "dimension", "$value": "{spacing.5}" },
+      "gap": { "$type": "dimension", "$value": "{spacing.3}" },
+      "fontSize": { "$type": "dimension", "$value": "{fontSize.lg}" },
+      "radius": { "$type": "dimension", "$value": "{radius.lg}" }
+    },
+    "primary": {
+      "background": {
+        "default": { "$type": "color", "$value": "{color.action.primary.background.default}" },
+        "hover": { "$type": "color", "$value": "{color.action.primary.background.hover}" },
+        "active": { "$type": "color", "$value": "{color.action.primary.background.active}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.background}" }
+      },
+      "foreground": {
+        "default": { "$type": "color", "$value": "{color.action.primary.foreground}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.foreground}" }
+      },
+      "border": {
+        "default": { "$type": "color", "$value": "transparent" }
+      }
+    },
+    "secondary": {
+      "background": {
+        "default": { "$type": "color", "$value": "{color.action.secondary.background.default}" },
+        "hover": { "$type": "color", "$value": "{color.action.secondary.background.hover}" },
+        "active": { "$type": "color", "$value": "{color.action.secondary.background.active}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.background}" }
+      },
+      "foreground": {
+        "default": { "$type": "color", "$value": "{color.action.secondary.foreground}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.foreground}" }
+      },
+      "border": {
+        "default": { "$type": "color", "$value": "{color.border.default}" }
+      }
+    },
+    "ghost": {
+      "background": {
+        "default": { "$type": "color", "$value": "{color.action.ghost.background.default}" },
+        "hover": { "$type": "color", "$value": "{color.action.ghost.background.hover}" },
+        "active": { "$type": "color", "$value": "{color.action.ghost.background.active}" },
+        "disabled": { "$type": "color", "$value": "transparent" }
+      },
+      "foreground": {
+        "default": { "$type": "color", "$value": "{color.action.ghost.foreground}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.foreground}" }
+      },
+      "border": {
+        "default": { "$type": "color", "$value": "transparent" }
+      }
+    },
+    "danger": {
+      "background": {
+        "default": { "$type": "color", "$value": "{color.action.danger.background.default}" },
+        "hover": { "$type": "color", "$value": "{color.action.danger.background.hover}" },
+        "active": { "$type": "color", "$value": "{color.action.danger.background.active}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.background}" }
+      },
+      "foreground": {
+        "default": { "$type": "color", "$value": "{color.action.danger.foreground}" },
+        "disabled": { "$type": "color", "$value": "{color.action.disabled.foreground}" }
+      },
+      "border": {
+        "default": { "$type": "color", "$value": "transparent" }
+      }
+    }
+  }
+}

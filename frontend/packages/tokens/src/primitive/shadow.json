@@ -1,0 +1,11 @@
+{
+  "shadow": {
+    "none": { "$type": "shadow", "$value": "none" },
+    "sm": { "$type": "shadow", "$value": "0 1px 2px 0 rgb(15 23 42 / 0.06)" },
+    "md": { "$type": "shadow", "$value": "0 8px 24px -12px rgb(15 23 42 / 0.24)" },
+    "lg": { "$type": "shadow", "$value": "0 16px 40px -16px rgb(15 23 42 / 0.32)" },
+    "darkSm": { "$type": "shadow", "$value": "0 1px 2px 0 rgb(0 0 0 / 0.32)" },
+    "darkMd": { "$type": "shadow", "$value": "0 8px 24px -12px rgb(0 0 0 / 0.64)" },
+    "darkLg": { "$type": "shadow", "$value": "0 16px 40px -16px rgb(0 0 0 / 0.72)" }
+  }
+}

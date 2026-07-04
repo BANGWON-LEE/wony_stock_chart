@@ -1,0 +1,52 @@
+{
+  "input": {
+    "fontFamily": { "$type": "fontFamily", "$value": "{typography.body.fontFamily}" },
+    "fontSize": { "$type": "dimension", "$value": "{fontSize.md}" },
+    "fontWeight": { "$type": "fontWeight", "$value": "{fontWeight.regular}" },
+    "height": { "$type": "dimension", "$value": "40px" },
+    "paddingInline": { "$type": "dimension", "$value": "{spacing.3}" },
+    "radius": { "$type": "dimension", "$value": "{radius.md}" },
+    "borderWidth": { "$type": "dimension", "$value": "{borderWidth.1}" },
+    "focusRingColor": { "$type": "color", "$value": "{focus.ringColor}" },
+    "focusRingWidth": { "$type": "dimension", "$value": "{focus.ringWidth}" },
+    "default": {
+      "background": { "$type": "color", "$value": "{color.surface.default}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "placeholder": { "$type": "color", "$value": "{color.text.muted}" },
+      "border": {
+        "default": { "$type": "color", "$value": "{color.border.default}" },
+        "hover": { "$type": "color", "$value": "{color.border.strong}" },
+        "focus": { "$type": "color", "$value": "{color.border.brand}" }
+      }
+    },
+    "filled": {
+      "background": { "$type": "color", "$value": "{color.surface.subtle}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "placeholder": { "$type": "color", "$value": "{color.text.muted}" },
+      "border": {
+        "default": { "$type": "color", "$value": "transparent" },
+        "hover": { "$type": "color", "$value": "{color.border.default}" },
+        "focus": { "$type": "color", "$value": "{color.border.brand}" }
+      }
+    },
+    "error": {
+      "background": { "$type": "color", "$value": "{color.status.danger.background}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "placeholder": { "$type": "color", "$value": "{color.text.muted}" },
+      "border": {
+        "default": { "$type": "color", "$value": "{color.status.danger.border}" },
+        "hover": { "$type": "color", "$value": "{color.status.danger.border}" },
+        "focus": { "$type": "color", "$value": "{color.status.danger.border}" }
+      },
+      "message": { "$type": "color", "$value": "{color.status.danger.foreground}" }
+    },
+    "disabled": {
+      "background": { "$type": "color", "$value": "{color.action.disabled.background}" },
+      "foreground": { "$type": "color", "$value": "{color.action.disabled.foreground}" },
+      "placeholder": { "$type": "color", "$value": "{color.action.disabled.foreground}" },
+      "border": {
+        "default": { "$type": "color", "$value": "{color.border.default}" }
+      }
+    }
+  }
+}

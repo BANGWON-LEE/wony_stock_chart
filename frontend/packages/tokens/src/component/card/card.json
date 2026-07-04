@@ -1,0 +1,26 @@
+{
+  "card": {
+    "radius": { "$type": "dimension", "$value": "{radius.lg}" },
+    "padding": { "$type": "dimension", "$value": "{spacing.6}" },
+    "gap": { "$type": "dimension", "$value": "{spacing.4}" },
+    "borderWidth": { "$type": "dimension", "$value": "{borderWidth.1}" },
+    "default": {
+      "background": { "$type": "color", "$value": "{color.surface.default}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "border": { "$type": "color", "$value": "{color.border.default}" },
+      "shadow": { "$type": "shadow", "$value": "{shadow.none}" }
+    },
+    "elevated": {
+      "background": { "$type": "color", "$value": "{color.surface.raised}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "border": { "$type": "color", "$value": "transparent" },
+      "shadow": { "$type": "shadow", "$value": "{shadow.elevated}" }
+    },
+    "outlined": {
+      "background": { "$type": "color", "$value": "{color.surface.default}" },
+      "foreground": { "$type": "color", "$value": "{color.text.primary}" },
+      "border": { "$type": "color", "$value": "{color.border.strong}" },
+      "shadow": { "$type": "shadow", "$value": "{shadow.none}" }
+    }
+  }
+}
