@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-chart-canvas: var(--chart-color-background-canvas);
@@ -8,9 +8,15 @@
   --color-chart-card-elevated: var(--chart-card-elevated-background);
   --color-chart-card-elevated-foreground: var(--chart-card-elevated-foreground);
   --color-chart-card-elevated-border: var(--chart-card-elevated-border);
-  --color-chart-button-secondary: var(--chart-button-secondary-background-default);
-  --color-chart-button-secondary-foreground: var(--chart-button-secondary-foreground-default);
-  --color-chart-button-secondary-border: var(--chart-button-secondary-border-default);
+  --color-chart-button-secondary: var(
+    --chart-button-secondary-background-default
+  );
+  --color-chart-button-secondary-foreground: var(
+    --chart-button-secondary-foreground-default
+  );
+  --color-chart-button-secondary-border: var(
+    --chart-button-secondary-border-default
+  );
   --color-chart-border-default: var(--chart-color-border-default);
 
   --spacing-chart-1: var(--chart-spacing-1);
@@ -59,11 +65,12 @@
   }
 
   #root {
-    width: 1126px;
+    width: 1420px;
     max-width: 100%;
     margin: 0 auto;
     text-align: center;
-    border-inline: var(--chart-border-width-1) solid var(--chart-color-border-default);
+    border-inline: var(--chart-border-width-1) solid
+      var(--chart-color-border-default);
     min-height: 100svh;
     display: flex;
     flex-direction: column;
@@ -125,8 +132,8 @@
 
 @layer components {
   .chart-renderer {
-    height: 380px;
-    min-height: 280px;
+    /* height: 380px; */
+    /* min-height: 280px; */
     position: relative;
     width: 100%;
   }

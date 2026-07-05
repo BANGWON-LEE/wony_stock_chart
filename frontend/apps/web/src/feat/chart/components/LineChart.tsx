@@ -32,6 +32,7 @@ export function LineChart({
       maxTicksLimit={chartOptions.maxTicksLimit}
       mode="line"
       model={chartModel}
+      compact={chartOptions.compact}
       stacked={chartOptions.stacked}
       title={chartOptions.title}
     />

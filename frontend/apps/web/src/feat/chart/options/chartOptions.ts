@@ -15,6 +15,7 @@ export function createChartOptions({
     title: options?.title ?? getDefaultChartTitle(type),
     maxTicksLimit: options?.maxTicksLimit ?? DEFAULT_MAX_TICKS_LIMIT,
     stacked: options?.stacked ?? false,
+    compact: options?.compact ?? false,
   }
 }
 
