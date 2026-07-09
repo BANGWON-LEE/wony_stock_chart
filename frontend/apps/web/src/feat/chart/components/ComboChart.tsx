@@ -36,6 +36,7 @@ export function ComboChart({
         'data-chart-title': chartOptions.title,
         'data-chart-types': type.join(','),
       }}
+      compact={chartOptions.compact}
       maxTicksLimit={chartOptions.maxTicksLimit}
       mode="combo"
       model={chartModel}

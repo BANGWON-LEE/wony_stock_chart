@@ -25,6 +25,7 @@ export interface ChartOptions {
   title?: string
   maxTicksLimit?: number
   stacked?: boolean
+  compact?: boolean
 }
 
 export interface BaseChartProps {

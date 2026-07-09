@@ -13,6 +13,8 @@ export function CandlestickChart({
   options,
   className,
 }: BaseChartProps) {
+  console.log('CandlestickChart data:', data)
+
   const chartModel = createChartModel({
     data,
     type: 'candlestick',
@@ -29,6 +31,7 @@ export function CandlestickChart({
         'data-chart-title': chartOptions.title,
         'data-chart-type': 'candlestick',
       }}
+      compact={chartOptions.compact}
       maxTicksLimit={chartOptions.maxTicksLimit}
       mode="candlestick"
       model={chartModel}

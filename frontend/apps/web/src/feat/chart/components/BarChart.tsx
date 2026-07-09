@@ -30,6 +30,7 @@ export function BarChart({
         'data-chart-title': chartOptions.title,
         'data-chart-type': 'bar',
       }}
+      compact={chartOptions.compact}
       maxTicksLimit={chartOptions.maxTicksLimit}
       mode="bar"
       model={chartModel}
