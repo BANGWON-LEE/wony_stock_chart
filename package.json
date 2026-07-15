@@ -4,7 +4,11 @@
   "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "pnpm --dir frontend dev",
+    "dev:backend": "pnpm --filter @chart/backend dev",
     "build": "pnpm --dir frontend build",
-    "lint": "pnpm --dir frontend lint"
+    "build:backend": "pnpm --filter @chart/backend build",
+    "lint": "pnpm --dir frontend lint",
+    "lint:backend": "pnpm --filter @chart/backend lint",
+    "typecheck:backend": "pnpm --filter @chart/backend typecheck"
   }
 }
