@@ -1,5 +1,11 @@
 {
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "outputDirectory": "apps/web/dist"
+  "outputDirectory": "apps/web/dist",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://wony-stock-chart.onrender.com/:path*"
+    }
+  ]
 }
