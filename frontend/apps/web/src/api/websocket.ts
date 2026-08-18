@@ -1,7 +1,9 @@
 export function createApiWebSocketUrl(path: string) {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '/api'
+  const apiBaseUrl =
+    import.meta.env.VITE_WS_BASE_URL ??
+    import.meta.env.VITE_API_BASE_URL ??
+    '/api'
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
-  console.log('apiBaseUrl : ', apiBaseUrl)
   const baseUrl = apiBaseUrl.endsWith('/')
     ? apiBaseUrl.slice(0, -1)
     : apiBaseUrl
