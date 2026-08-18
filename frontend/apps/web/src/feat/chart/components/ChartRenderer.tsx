@@ -20,7 +20,7 @@ import {
   CandlestickController,
   CandlestickElement,
 } from 'chartjs-chart-financial'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type Ref } from 'react'
 import type {
   ChartModel,
   ChartPrimitive,
@@ -64,7 +64,11 @@ interface ChartRendererProps {
   maxTicksLimit: number
   stacked: boolean
   compact: boolean
+  xTickFormat?: 'monthYear'
+  xTimeUnit?: 'month' | 'year'
+  yMin?: number
   className?: string
+  containerRef?: Ref<HTMLDivElement>
   dataAttributes: Record<string, string | number | boolean>
 }
 
@@ -117,7 +121,27 @@ function toTimeValue(value: ChartPrimitive) {
 }
 
 function hasTimeLabels(model: ChartModel) {
-  return model.labels.length > 0 && model.labels.every(label => toTimeValue(label) !== null)
+  return (
+    model.labels.length > 0 &&
+    model.labels.every(label => toTimeValue(label) !== null)
+  )
+}
+
+function formatMonthYearTick(value: string | number) {
+  const timeValue = typeof value === 'number' ? value : Number(value)
+  const date = new Date(Number.isFinite(timeValue) ? timeValue : value)
+
+  if (Number.isNaN(date.getTime())) return ''
+
+  const parts = new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: 'numeric',
+  }).formatToParts(date)
+  const year = parts.find(part => part.type === 'year')?.value ?? ''
+  const month = parts.find(part => part.type === 'month')?.value ?? ''
+
+  return month === '1' ? `${year}년` : `${month}월`
 }
 
 function getSeriesColor(index: number) {
@@ -217,7 +241,11 @@ export function ChartRenderer({
   maxTicksLimit,
   stacked,
   compact,
+  xTickFormat,
+  xTimeUnit,
+  yMin,
   className,
+  containerRef,
   dataAttributes,
 }: ChartRendererProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -322,6 +350,12 @@ export function ChartRenderer({
           x: {
             display: !compact,
             type: useTimeScale ? 'timeseries' : 'category',
+            time:
+              useTimeScale && xTimeUnit
+                ? {
+                    unit: xTimeUnit,
+                  }
+                : undefined,
             stacked,
             border: {
               display: false,
@@ -331,11 +365,18 @@ export function ChartRenderer({
             },
             ticks: {
               color: textColor,
+              callback:
+                useTimeScale && xTickFormat === 'monthYear'
+                  ? value => formatMonthYearTick(value)
+                  : undefined,
               maxTicksLimit,
+              maxRotation: 0,
+              minRotation: 0,
             },
           },
           y: {
             display: !compact,
+            min: yMin,
             stacked,
             border: {
               display: false,
@@ -352,22 +393,29 @@ export function ChartRenderer({
       },
     }
 
-    console.log('config:', config)
-    console.log('canvas:', canvas)
-
     const chart = new ChartJS(canvas, config)
 
     return () => {
       chart.destroy()
     }
-  }, [compact, maxTicksLimit, mode, model, stacked, title])
+  }, [
+    compact,
+    maxTicksLimit,
+    mode,
+    model,
+    stacked,
+    title,
+    xTickFormat,
+    xTimeUnit,
+    yMin,
+  ])
 
   const rendererClassName = className
     ? `${CHART_RENDERER_CLASS_NAME} ${className}`
     : CHART_RENDERER_CLASS_NAME
 
   return (
-    <div className={rendererClassName} {...dataAttributes}>
+    <div ref={containerRef} className={rendererClassName} {...dataAttributes}>
       <canvas ref={canvasRef} aria-label={title} />
     </div>
   )

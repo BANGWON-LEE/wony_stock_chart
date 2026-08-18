@@ -1,3 +1,5 @@
+import type { Ref } from 'react'
+
 export type ChartType = 'line' | 'bar' | 'candlestick'
 
 export type ChartTypeConfig = ChartType | ChartType[]
@@ -26,6 +28,9 @@ export interface ChartOptions {
   maxTicksLimit?: number
   stacked?: boolean
   compact?: boolean
+  yMin?: number
+  xTimeUnit?: 'month' | 'year'
+  xTickFormat?: 'monthYear'
 }
 
 export interface BaseChartProps {
@@ -33,6 +38,7 @@ export interface BaseChartProps {
   timePropertyName?: string
   options?: ChartOptions
   className?: string
+  containerRef?: Ref<HTMLDivElement>
 }
 
 export interface ChartProps extends BaseChartProps {

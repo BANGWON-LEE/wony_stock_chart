@@ -1,7 +1,21 @@
-import { CandlestickChartPanel } from './CandlestickChartPanel'
+import { lazy } from 'react'
+
+// import { CandlestickChartPanel } from './CandlestickChartPanel'
+const CandlestickChartPanel = lazy(() => import('./CandlestickChartPanel'))
+
 import { PopularStockList } from './PopularStockList'
+import { useSelectedStockStore } from '../../../../feat/stock'
+
+console.error('[chart-debug] MarketChartSection module loaded')
 
 export function MarketChartSection() {
+  const selectedStockCode = useSelectedStockStore(
+    state => state.selectedStockCode,
+  )
+  console.error('[chart-debug] MarketChartSection render', {
+    selectedStockCode,
+  })
+
   return (
     <section
       className="border-t border-[#e5e8eb] px-12 py-11 max-[960px]:px-5 max-[960px]:py-8"
@@ -16,23 +30,15 @@ export function MarketChartSection() {
           지금 움직이는 종목
         </h2>
       </div>
-      {/* <div className="mb-[18px] flex flex-wrap gap-2" aria-label="차트 필터">
-        {filterItems.map((item, index) => (
-          <button
-            className={`h-[34px] cursor-pointer rounded-full border-0 px-3.5 font-[inherit] text-sm font-bold ${
-              index === 0
-                ? 'bg-[#191f28] text-white'
-                : 'bg-[#e5e8eb] text-[#4e5968]'
-            }`}
-            key={item}
-            type="button"
-          >
-            {item}
-          </button>
-        ))}
-      </div> */}
-      <div className="grid grid-cols-[minmax(0,1fr)_320px] items-stretch gap-4 max-[960px]:grid-cols-1">
-        <CandlestickChartPanel />
+
+      <div className="grid grid-cols-[minmax(0,1fr)_420px] items-stretch gap-4 max-[1260px]:grid-cols-1">
+        {selectedStockCode ? (
+          <CandlestickChartPanel selectedStockCode={selectedStockCode} />
+        ) : (
+          <div className="flex h-[420px] items-center justify-center rounded-lg border border-[#e5e8eb] bg-white p-5 text-[#8b95a1]">
+            loading
+          </div>
+        )}
         <aside
           className="rounded-lg border border-[#e5e8eb] bg-white p-5"
           aria-label="실시간 인기 종목"

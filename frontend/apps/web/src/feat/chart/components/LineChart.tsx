@@ -12,6 +12,7 @@ export function LineChart({
   timePropertyName = 'time',
   options,
   className,
+  containerRef,
 }: BaseChartProps) {
   const chartModel = createChartModel({
     data,
@@ -23,6 +24,7 @@ export function LineChart({
   return (
     <ChartRenderer
       className={className}
+      containerRef={containerRef}
       dataAttributes={{
         'data-chart-labels': formatChartLabels(chartModel.labels),
         'data-chart-points': countChartPoints(chartModel),

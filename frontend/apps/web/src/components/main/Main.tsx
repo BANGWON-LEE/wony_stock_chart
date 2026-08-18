@@ -3,11 +3,12 @@ import { issueKisAccessToken } from '../../feat/stock'
 import { Header } from './layout/Header'
 import { IndexSummarySection } from './sections/IndexSummarySection'
 import { MarketChartSection } from './sections/MarketChartSection'
-import { MarketSignalsSection } from './sections/MarketSignalsSection'
-import { ScheduleSection } from './sections/ScheduleSection'
+// import { MarketSignalsSection } from './sections/MarketSignalsSection'
+// import { ScheduleSection } from './sections/ScheduleSection'
 
 export function Main() {
   useEffect(() => {
+    console.log('232323')
     async function fetchData() {
       try {
         await issueKisAccessToken()
@@ -24,8 +25,8 @@ export function Main() {
       <Header />
       <IndexSummarySection />
       <MarketChartSection />
-      <MarketSignalsSection />
-      <ScheduleSection />
+      {/* <MarketSignalsSection /> */}
+      {/* <ScheduleSection /> */}
     </main>
   )
 }
