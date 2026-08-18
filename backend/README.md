@@ -49,6 +49,13 @@ JWT_ACCESS_SECRET=...
 JWT_REFRESH_SECRET=...
 ```
 
+Render 배포 환경 변수에는 같은 key를 중복 등록하지 않습니다. 배포에서는 아래 값만 등록합니다.
+
+```bash
+GOOGLE_REDIRECT_URI=https://wony-stock-chart.onrender.com/auth/google/callback
+FRONTEND_URL=https://<vercel-project-domain>
+```
+
 로그인 URL 생성:
 
 ```text

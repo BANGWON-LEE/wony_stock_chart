@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite React 프론트엔드입니다. 실제 앱은 `apps/web`에 있고, 디자인 토큰 패키지는 `packages/tokens`에 있습니다.
 
-Currently, two official plugins are available:
+## 실행
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+개발 서버는 기본적으로 `http://localhost:5173`에서 실행됩니다.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 환경 변수
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Vite env 파일은 `frontend/apps/web` 기준으로 둡니다.
+
+로컬 개발:
+
+```bash
+cp apps/web/.env.development.example apps/web/.env.development
 ```
+
+```env
+VITE_API_BASE_URL=/api
+VITE_WS_BASE_URL=/api
+```
+
+`/api`는 `apps/web/vite.config.ts`에서 `http://localhost:4000` 백엔드로 프록시됩니다.
+
+Vercel 배포:
+
+```env
+VITE_API_BASE_URL=/api
+VITE_WS_BASE_URL=https://wony-stock-chart.onrender.com
+```
+
+HTTP API는 `frontend/vercel.json`의 rewrite가 `/api/*`를 Render 백엔드로 프록시합니다. WebSocket은 Vercel rewrite 대신 Render 백엔드에 직접 연결하므로 `VITE_WS_BASE_URL`을 Render URL로 둡니다.
+
+## 빌드
+
+```bash
+pnpm build
+```
+
+Vercel output directory는 `apps/web/dist`입니다.
