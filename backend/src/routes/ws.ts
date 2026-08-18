@@ -5,6 +5,8 @@ import { isKisDomesticStockSymbol, KisRealtimeClient } from "../adapters/brokers
 
 type ClientWsMessage = {
   type?: string;
+  tr_key?: string;
+  tr_keys?: string[];
   symbol?: string;
   symbols?: string[];
 };
@@ -15,16 +17,32 @@ function sendJson(socket: WebSocket, payload: unknown): void {
   }
 }
 
-function parseSymbolsFromQuery(symbolsQuery: unknown): string[] {
-  if (typeof symbolsQuery !== "string") return [];
+function parseSymbolsFromDelimitedInput(input: unknown): string[] {
+  if (typeof input !== "string") return [];
 
-  return symbolsQuery
+  return input
     .split(",")
     .map((symbol) => symbol.trim().toUpperCase())
     .filter(Boolean);
 }
 
+function parseSymbolsFromQuery(query: { symbols?: unknown; tr_key?: unknown; tr_keys?: unknown }): string[] {
+  return [
+    ...parseSymbolsFromDelimitedInput(query.symbols),
+    ...parseSymbolsFromDelimitedInput(query.tr_key),
+    ...parseSymbolsFromDelimitedInput(query.tr_keys),
+  ];
+}
+
 function parseSymbolsFromMessage(message: ClientWsMessage): string[] {
+  if (Array.isArray(message.tr_keys)) {
+    return message.tr_keys.map((symbol) => symbol.trim().toUpperCase()).filter(Boolean);
+  }
+
+  if (typeof message.tr_key === "string") {
+    return [message.tr_key.trim().toUpperCase()].filter(Boolean);
+  }
+
   if (Array.isArray(message.symbols)) {
     return message.symbols.map((symbol) => symbol.trim().toUpperCase()).filter(Boolean);
   }
@@ -52,8 +70,8 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.get("/ws/kis/domestic-stock/trades", { websocket: true }, (socket, request) => {
-    const query = request.query as { symbols?: string };
-    const initialSymbols = parseSymbolsFromQuery(query.symbols);
+    const query = request.query as { symbols?: string; tr_key?: string; tr_keys?: string };
+    const initialSymbols = parseSymbolsFromQuery(query);
     const invalidSymbols = initialSymbols.filter((symbol) => !isKisDomesticStockSymbol(symbol));
 
     if (invalidSymbols.length > 0) {
@@ -61,8 +79,8 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
         event: "error",
         data: {
           code: "INVALID_INPUT",
-          message: "symbols query contains invalid domestic stock symbols.",
-          details: { symbols: invalidSymbols },
+          message: "query contains invalid domestic stock tr_key values.",
+          details: { tr_keys: invalidSymbols },
         },
       });
       socket.close();
@@ -71,6 +89,25 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
 
     const kisRealtimeClient = new KisRealtimeClient(app.config.kis);
     let upstreamClose: (() => void) | undefined;
+    let downstreamClosed = false;
+
+    const withConnection = (action: (connection: Awaited<typeof connectionPromise>) => void) => {
+      void connectionPromise
+        .then((connection) => {
+          if (!downstreamClosed) action(connection);
+        })
+        .catch((error: Error) => {
+          if (downstreamClosed) return;
+
+          sendJson(socket, {
+            event: "error",
+            data: {
+              code: "KIS_REALTIME_ERROR",
+              message: error.message,
+            },
+          });
+        });
+    };
 
     socket.on("message", (data) => {
       let message: ClientWsMessage;
@@ -96,20 +133,20 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
           event: "error",
           data: {
             code: "INVALID_INPUT",
-            message: "message contains invalid domestic stock symbols.",
-            details: { symbols: invalidMessageSymbols },
+            message: "message contains invalid domestic stock tr_key values.",
+            details: { tr_keys: invalidMessageSymbols },
           },
         });
         return;
       }
 
       if (message.type === "subscribe") {
-        void connectionPromise.then((connection) => connection.subscribe(symbols));
+        withConnection((connection) => connection.subscribe(symbols));
         return;
       }
 
       if (message.type === "unsubscribe") {
-        void connectionPromise.then((connection) => connection.unsubscribe(symbols));
+        withConnection((connection) => connection.unsubscribe(symbols));
         return;
       }
 
@@ -150,8 +187,13 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
     void connectionPromise
       .then((connection) => {
         upstreamClose = connection.close;
+        if (downstreamClosed) {
+          upstreamClose();
+        }
       })
       .catch((error: Error) => {
+        if (downstreamClosed) return;
+
         sendJson(socket, {
           event: "error",
           data: {
@@ -160,9 +202,10 @@ export const websocketRoutes: FastifyPluginAsync = async (app) => {
           },
         });
         socket.close();
-      });
+    });
 
     socket.on("close", () => {
+      downstreamClosed = true;
       upstreamClose?.();
     });
   });

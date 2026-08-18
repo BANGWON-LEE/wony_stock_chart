@@ -12,6 +12,7 @@ export function CandlestickChart({
   timePropertyName = 'time',
   options,
   className,
+  containerRef,
 }: BaseChartProps) {
   console.log('CandlestickChart data:', data)
 
@@ -25,6 +26,7 @@ export function CandlestickChart({
   return (
     <ChartRenderer
       className={className}
+      containerRef={containerRef}
       dataAttributes={{
         'data-chart-labels': formatChartLabels(chartModel.labels),
         'data-chart-points': countChartPoints(chartModel),
@@ -37,6 +39,9 @@ export function CandlestickChart({
       model={chartModel}
       stacked={chartOptions.stacked}
       title={chartOptions.title}
+      xTickFormat={chartOptions.xTickFormat}
+      xTimeUnit={chartOptions.xTimeUnit}
+      yMin={chartOptions.yMin}
     />
   )
 }

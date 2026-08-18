@@ -1,4 +1,5 @@
 export { Chart } from './components/Chart'
+export { getStockCandles } from './api/candleApi'
 export { LineChart } from './components/LineChart'
 export { BarChart } from './components/BarChart'
 export { CandlestickChart } from './components/CandlestickChart'
@@ -22,3 +23,4 @@ export type {
   ChartType,
   ChartTypeConfig,
 } from './types/chart.types'
+export type { CandleRow, StockCandleInterval } from './api/candleApi'

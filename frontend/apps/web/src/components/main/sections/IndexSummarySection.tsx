@@ -1,4 +1,4 @@
-import { indexItems } from '../data'
+// import { indexItems } from '../data'
 
 export function IndexSummarySection() {
   return (
@@ -7,12 +7,17 @@ export function IndexSummarySection() {
       aria-labelledby="index-title"
     >
       <div className="flex max-w-[680px] flex-col gap-2">
-        <p className="text-sm font-extrabold text-[#3182f6]">시장 한눈에 보기</p>
-        <h1 className="m-0 text-[42px] leading-[1.18] tracking-[0] max-[960px]:text-[34px]" id="index-title">
+        <p className="text-sm font-extrabold text-[#3182f6]">
+          시장 한눈에 보기
+        </p>
+        <h1
+          className="m-0 text-[42px] leading-[1.18] tracking-[0] max-[960px]:text-[34px]"
+          id="index-title"
+        >
           오늘의 주요 지수
         </h1>
       </div>
-      <div className="grid grid-cols-3 gap-3 max-[960px]:grid-cols-1">
+      {/* <div className="grid grid-cols-3 gap-3 max-[960px]:grid-cols-1">
         {indexItems.map(item => (
           <article className="flex flex-col gap-2 rounded-lg border border-[#e5e8eb] bg-white p-5" key={item.name}>
             <span className="text-[13px] font-bold text-[#8b95a1]">{item.name}</span>
@@ -22,7 +27,7 @@ export function IndexSummarySection() {
             </em>
           </article>
         ))}
-      </div>
+      </div> */}
     </section>
   )
 }

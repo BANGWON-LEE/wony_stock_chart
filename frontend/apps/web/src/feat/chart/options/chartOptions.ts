@@ -7,15 +7,23 @@ interface CreateChartOptionsParams {
   options?: ChartOptions
 }
 
+type ResolvedChartOptions = Required<
+  Omit<ChartOptions, 'xTickFormat' | 'xTimeUnit' | 'yMin'>
+> &
+  Pick<ChartOptions, 'xTickFormat' | 'xTimeUnit' | 'yMin'>
+
 export function createChartOptions({
   type,
   options,
-}: CreateChartOptionsParams): Required<ChartOptions> {
+}: CreateChartOptionsParams): ResolvedChartOptions {
   return {
     title: options?.title ?? getDefaultChartTitle(type),
     maxTicksLimit: options?.maxTicksLimit ?? DEFAULT_MAX_TICKS_LIMIT,
     stacked: options?.stacked ?? false,
     compact: options?.compact ?? false,
+    xTickFormat: options?.xTickFormat,
+    xTimeUnit: options?.xTimeUnit,
+    yMin: options?.yMin,
   }
 }
 

@@ -5,6 +5,8 @@ export type KisQuoteClientConfig = {
   accessToken?: string
   intstockMultpriceTrId?: string
   marketValueTrId?: string
+  timeDailyChartPriceTrId?: string
+  timeMinuteChartPriceTrId?: string
 }
 
 export type FetchDomesticStockQuotesInput = {
@@ -26,6 +28,25 @@ export type FetchDomesticStockMarketValueRankingInput = {
   rankSortClassCode?: string
   belongingClassCode?: string
   targetExcludeClassCode?: string
+}
+
+export type FetchDomesticStockTimeDailyChartPriceInput = {
+  symbol: string
+  marketDivisionCode?: string
+  inputDateFrom?: string
+  inputDateTo?: string
+  periodDivisionCode?: 'D' | 'W' | 'M' | 'Y'
+  orgAdjustedPrice?: string
+  etcClassCode?: string
+}
+
+export type FetchDomesticStockTimeMinuteChartPriceInput = {
+  symbol: string
+  marketDivisionCode?: string
+  inputHour?: string
+  inputDate?: string
+  includePastData?: string
+  includeFakeTick?: string
 }
 
 export type KisDomesticStockQuotesResponse = {
@@ -67,10 +88,65 @@ export type KisDomesticStockMarketValueRankingResponse = Omit<
   output?: KisDomesticStockMarketValueRankingOutput[]
 }
 
+export type KisDomesticStockTimeDailyChartPriceOutput1 = {
+  prdy_vrss?: string
+  prdy_vrss_sign?: string
+  prdy_ctrt?: string
+  stck_prdy_clpr?: string
+  acml_vol?: string
+  acml_tr_pbmn?: string
+  hts_kor_isnm?: string
+  stck_prpr?: string
+  [key: string]: unknown
+}
+
+export type KisDomesticStockTimeDailyChartPriceOutput2 = {
+  stck_bsop_date?: string
+  stck_prpr?: string
+  stck_clpr?: string
+  stck_oprc?: string
+  stck_hgpr?: string
+  stck_lwpr?: string
+  acml_vol?: string
+  acml_tr_pbmn?: string
+  [key: string]: unknown
+}
+
+export type KisDomesticStockTimeDailyChartPriceResponse = Omit<
+  KisDomesticStockQuotesResponse,
+  'output'
+> & {
+  output1?: KisDomesticStockTimeDailyChartPriceOutput1
+  output2?: KisDomesticStockTimeDailyChartPriceOutput2[]
+}
+
+export type KisDomesticStockTimeMinuteChartPriceOutput2 = {
+  stck_bsop_date?: string
+  stck_cntg_hour?: string
+  stck_prpr?: string
+  stck_oprc?: string
+  stck_hgpr?: string
+  stck_lwpr?: string
+  cntg_vol?: string
+  acml_vol?: string
+  acml_tr_pbmn?: string
+  [key: string]: unknown
+}
+
+export type KisDomesticStockTimeMinuteChartPriceResponse = Omit<
+  KisDomesticStockQuotesResponse,
+  'output'
+> & {
+  output1?: KisDomesticStockTimeDailyChartPriceOutput1
+  output2?: KisDomesticStockTimeMinuteChartPriceOutput2[]
+}
+
 const DOMESTIC_STOCK_API_PATH = '/uapi/domestic-stock/v1'
 
 const KIS_DOMESTIC_STOCK_QUOTATION_ENDPOINTS = {
   intstockMultprice: 'quotations/intstock-multprice',
+  timeDailyChartPrice: 'quotations/inquire-daily-itemchartprice',
+  timeMinuteChartPrice: 'quotations/inquire-time-dailychartprice',
 } as const
 
 const KIS_DOMESTIC_STOCK_RANKING_ENDPOINTS = {
@@ -187,6 +263,95 @@ export class KisQuoteClient {
 
     const payload =
       (await response.json()) as KisDomesticStockMarketValueRankingResponse
+
+    if (!response.ok || payload.rt_cd === '1') {
+      throw new KisApiError(response.status, payload)
+    }
+
+    return payload
+  }
+
+  async fetchDomesticStockTimeDailyChartPrice(
+    input: FetchDomesticStockTimeDailyChartPriceInput,
+  ): Promise<KisDomesticStockTimeDailyChartPriceResponse> {
+    this.assertConfigured(
+      'KIS_TIME_DAILY_CHART_PRICE_TR_ID',
+      this.config.timeDailyChartPriceTrId,
+    )
+
+    const url = buildDomesticStockQuotationsUrl(
+      this.config.baseUrl,
+      KIS_DOMESTIC_STOCK_QUOTATION_ENDPOINTS.timeDailyChartPrice,
+    )
+    url.searchParams.set('fid_etc_cls_code', input.etcClassCode ?? '')
+    url.searchParams.set(
+      'fid_cond_mrkt_div_code',
+      input.marketDivisionCode ?? 'J',
+    )
+    url.searchParams.set('fid_input_iscd', input.symbol)
+    url.searchParams.set('fid_input_date_1', input.inputDateFrom ?? '')
+    url.searchParams.set('fid_input_date_2', input.inputDateTo ?? '')
+    url.searchParams.set('fid_period_div_code', input.periodDivisionCode ?? 'D')
+    url.searchParams.set('fid_org_adj_prc', input.orgAdjustedPrice ?? '0')
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        authorization: `Bearer ${this.config.accessToken}`,
+        appkey: this.config.appKey ?? '',
+        appsecret: this.config.appSecret ?? '',
+        tr_id: this.config.timeDailyChartPriceTrId ?? '',
+        custtype: 'P',
+      },
+    })
+
+    const payload =
+      (await response.json()) as KisDomesticStockTimeDailyChartPriceResponse
+
+    if (!response.ok || payload.rt_cd === '1') {
+      throw new KisApiError(response.status, payload)
+    }
+
+    return payload
+  }
+
+  async fetchDomesticStockTimeMinuteChartPrice(
+    input: FetchDomesticStockTimeMinuteChartPriceInput,
+  ): Promise<KisDomesticStockTimeMinuteChartPriceResponse> {
+    this.assertConfigured(
+      'KIS_TIME_MINUTE_CHART_PRICE_TR_ID',
+      this.config.timeMinuteChartPriceTrId,
+    )
+
+    const url = buildDomesticStockQuotationsUrl(
+      this.config.baseUrl,
+      KIS_DOMESTIC_STOCK_QUOTATION_ENDPOINTS.timeMinuteChartPrice,
+    )
+    url.searchParams.set(
+      'fid_cond_mrkt_div_code',
+      input.marketDivisionCode ?? 'J',
+    )
+    url.searchParams.set('fid_input_iscd', input.symbol)
+    url.searchParams.set('fid_input_hour_1', input.inputHour ?? '153000')
+    url.searchParams.set('fid_input_date_1', input.inputDate ?? '')
+    url.searchParams.set('fid_pw_data_incu_yn', input.includePastData ?? 'N')
+    url.searchParams.set('fid_fake_tick_incu_yn', input.includeFakeTick ?? '')
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json; charset=utf-8',
+        authorization: `Bearer ${this.config.accessToken}`,
+        appkey: this.config.appKey ?? '',
+        appsecret: this.config.appSecret ?? '',
+        tr_id: this.config.timeMinuteChartPriceTrId ?? '',
+        custtype: 'P',
+      },
+    })
+
+    const payload =
+      (await response.json()) as KisDomesticStockTimeMinuteChartPriceResponse
 
     if (!response.ok || payload.rt_cd === '1') {
       throw new KisApiError(response.status, payload)

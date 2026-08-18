@@ -17,6 +17,7 @@ export function ComboChart({
   timePropertyName = 'time',
   options,
   className,
+  containerRef,
 }: ComboChartProps) {
   const primaryType = type[0] ?? 'line'
   const chartModel = createChartModel({
@@ -30,6 +31,7 @@ export function ComboChart({
   return (
     <ChartRenderer
       className={className}
+      containerRef={containerRef}
       dataAttributes={{
         'data-chart-labels': formatChartLabels(chartModel.labels),
         'data-chart-points': countChartPoints(chartModel),
