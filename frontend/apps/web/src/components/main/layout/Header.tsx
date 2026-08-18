@@ -1,16 +1,18 @@
 import { useId, useState } from 'react'
 
 import { MovePage } from '../../../router/MovePage'
-import { navItems, notificationItems } from '../data'
+import { GoogleLoginButton } from '../../../feat/auth/components/GoogleLoginButton'
+// import { navItems, notificationItems } from '../data'
+// import { navItems } from '../data'
 import { NotificationCenterSection } from '../sections/NotificationCenterSection'
 // import {router}
 
 export function Header() {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false)
   const notificationPanelId = useId()
-  const unreadCount = notificationItems.filter(
-    item => item.status === 'new',
-  ).length
+  // const unreadCount = notificationItems.filter(
+  //   item => item.status === 'new',
+  // ).length
 
   return (
     <header className="sticky top-0 z-10 grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-8 border-b border-[#e5e8eb] bg-white/90 px-12 backdrop-blur-[18px] max-[960px]:grid-cols-1 max-[960px]:gap-3.5 max-[960px]:px-5 max-[960px]:py-4">
@@ -21,7 +23,7 @@ export function Header() {
       >
         <MovePage to="/" text="chart" />
       </div>
-      <nav
+      {/* <nav
         className="flex items-center gap-7 max-[960px]:gap-4 max-[960px]:overflow-x-auto max-[960px]:pb-0.5"
         aria-label="주요 메뉴"
       >
@@ -34,15 +36,15 @@ export function Header() {
             {item}
           </a>
         ))}
-      </nav>
+      </nav> */}
       <div className="relative flex items-center gap-2.5 max-[960px]:w-full">
-        <button
+        {/* <button
           className="h-[38px] min-w-[188px] cursor-pointer rounded-lg border-0 bg-[#f2f4f6] px-4 text-left font-[inherit] text-[#8b95a1] max-[960px]:w-full"
           type="button"
         >
           / 를 눌러 검색하세요
-        </button>
-        <button
+        </button> */}
+        {/* <button
           className="relative inline-grid h-[38px] w-[38px] shrink-0 place-items-center rounded-lg bg-[#191f28] text-lg leading-none font-black text-white no-underline"
           aria-controls={notificationPanelId}
           aria-expanded={isNotificationOpen}
@@ -56,7 +58,8 @@ export function Header() {
               {unreadCount}
             </strong>
           ) : null}
-        </button>
+        </button> */}
+        <GoogleLoginButton />
         {isNotificationOpen ? (
           <NotificationCenterSection
             id={notificationPanelId}

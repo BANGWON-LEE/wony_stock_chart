@@ -1,11 +1,16 @@
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
+import jwt from "@fastify/jwt";
 import sensible from "@fastify/sensible";
 import type { FastifyError, FastifyPluginAsync } from "fastify";
+import fp from "fastify-plugin";
 import { fail } from "../utils/http.js";
 
-export const commonPlugin: FastifyPluginAsync = async (app) => {
+const commonPluginImpl: FastifyPluginAsync = async (app) => {
   await app.register(helmet);
+  await app.register(jwt, {
+    secret: app.config.auth.jwtAccessSecret,
+  });
   await app.register(cors, {
     origin: true,
     credentials: true,
@@ -58,3 +63,7 @@ export const commonPlugin: FastifyPluginAsync = async (app) => {
     );
   });
 };
+
+export const commonPlugin = fp(commonPluginImpl, {
+  name: "common-plugin",
+});
