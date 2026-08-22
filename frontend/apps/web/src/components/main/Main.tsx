@@ -3,7 +3,7 @@ import { issueKisAccessToken } from '../../feat/stock'
 import { Header } from './layout/Header'
 import { IndexSummarySection } from './sections/IndexSummarySection'
 import { MarketChartSection } from './sections/MarketChartSection'
-import { Analytics } from '@vercel/analytics/next'
+import { Analytics } from '@vercel/analytics/react'
 
 // import { MarketSignalsSection } from './sections/MarketSignalsSection'
 // import { ScheduleSection } from './sections/ScheduleSection'
